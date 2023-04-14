@@ -12,15 +12,18 @@ public class GenerativeSpawn : MonoBehaviour
     {
         //get mesh positions
         Mesh domeMesh = dome.GetComponent<MeshFilter>().mesh;
+        HashSet<Vector3> unique_birds_pos = new HashSet<Vector3>();
 
-        Debug.Log(domeMesh.vertices.Length);
-
-        for (int i = 0; i < 341; i++)
+        for (int i = 0; i < domeMesh.vertices.Length; i++)
         {
+            if (!unique_birds_pos.Contains(domeMesh.vertices[i]))
+            {
+                unique_birds_pos.Add(dome.transform.TransformPoint(domeMesh.vertices[i]));
+            }
             
-            birds_pos.Add(dome.transform.TransformPoint(domeMesh.vertices[i]));
         }
         //instatiate birds
+        birds_pos = new List<Vector3>(unique_birds_pos);
         foreach (Vector3 position in birds_pos)
         {
             birds.Add(GameObject.Instantiate(bird, position, Quaternion.identity));
