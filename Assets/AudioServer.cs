@@ -8,6 +8,8 @@ public class AudioServer : MonoBehaviour
 
     public List<AudioClip> indexedBirdSounds = new List<AudioClip>();
 
+    public List<AudioClip> deathChimes = new List<AudioClip>();
+
     void Start()
     {
         
@@ -28,7 +30,14 @@ public class AudioServer : MonoBehaviour
     public AudioClip GetBirdSound(int index)
     {
         return GetBirdSound();
-        AudioClip sound = indexedBirdSounds[index];
+        //AudioClip sound = indexedBirdSounds[index];
+        //return sound;
+    }
+
+    public AudioClip GetDeathChime()
+    {
+        int audio_index = (int)Random.Range(0, deathChimes.Count);
+        AudioClip sound = deathChimes[audio_index];
         return sound;
     }
 }

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class bird : MonoBehaviour
 {
-    private int extinctionYear;
+    public GameObject sceneManager;
+    public GameObject deathChimePlayer;
+
+    private int extinctionYear = 2030;
     private string birdName;
     void Start()
     {
@@ -12,10 +15,18 @@ public class bird : MonoBehaviour
     }
     void Update()
     {
-        if (GenerativeSpawn.YEAR == extinctionYear)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            //gameObject.GetComponent<AudioSource>().PlayOneShot();
-            Destroy(gameObject);
+            //gameObject.GetComponent<AudioSource>().Stop();
+            //AudioClip deathChime = sceneManager.GetComponent<AudioServer>().GetDeathChime();
+            //gameObject.GetComponent<AudioSource>().PlayOneShot(deathChime);
+        }
+        if (GenerativeSpawn.YEAR >= extinctionYear)
+        {
+            gameObject.GetComponent<AudioSource>().Stop();
+            GameObject.Instantiate(deathChimePlayer, transform.position, Quaternion.identity);
+            Debug.Log("Death");
+            KillBird(0.5f);
         }
     }
 
@@ -33,5 +44,11 @@ public class bird : MonoBehaviour
     {
         gameObject.GetComponent<AudioSource>().clip = clip;
         gameObject.GetComponent<AudioSource>().Play();
+    }
+
+    IEnumerator KillBird(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
     }
 }

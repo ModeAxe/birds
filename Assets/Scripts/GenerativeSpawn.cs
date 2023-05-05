@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.SceneManagement;
 public class GenerativeSpawn : MonoBehaviour
 {
     public float timeScale = 20f;
@@ -52,6 +52,16 @@ public class GenerativeSpawn : MonoBehaviour
             Debug.Log(YEAR);
         }
         time += Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     private void AssignBirdData()
